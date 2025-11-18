@@ -5,9 +5,11 @@
     session_start();
 
     // Controllo accesso
-    if (!isset($_SESSION['accessoPermesso']))
+    if (!isset($_SESSION['accessoPermesso'])){
         header('Location: login.php');
-
+        exit();
+    }
+    
     require_once("./stile_shop.php");
 
     // Gestione delle azioni
@@ -88,7 +90,7 @@
                 ?>
                         <div class="carrello-vuoto">
                             <p>Il tuo carrello è vuoto</p>
-                            <a href="shop.php">Vai al Catalogo</a>
+                            <a href="shop_xml.php">Vai al Catalogo</a>
                         </div>
                         <?php 
                     }else{ 
@@ -113,9 +115,9 @@
 
                                 <input type="reset" name="annullaSelezionati" class="bottone-bianco" value="Deseleziona Tutto" />
 
-                                <a href="shop.php" class="bottone-grigio"> Continua Acquisti </a>
+                                <a href="shop_xml.php" class="bottone-grigio"> Continua Acquisti </a>
                                 
-                                <a href="riepilogo.php" class="bottone-acqua"> Vai al Pagamento </a>
+                                <a href="riepilogo_xml.php" class="bottone-acqua"> Vai al Pagamento </a>
                             </div>
                         </form>
                         <?php 

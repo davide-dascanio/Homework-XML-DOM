@@ -50,7 +50,7 @@
                 $_SESSION['spesaFinora']=$row['sommeSpese'];
                 $_SESSION['dataLogin']=time();
                 $_SESSION['accessoPermesso']=1000;
-                header('Location: shop.php');    // accesso alla pagina iniziale
+                header('Location: shop_xml.php');    // accesso alla pagina iniziale
                 exit();
             }else 
                 $msg = "<em>Username e password inseriti non corrispondono a nessun account. <br /> Riprova o registrati.</em>";

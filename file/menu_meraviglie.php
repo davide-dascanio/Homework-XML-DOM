@@ -9,7 +9,7 @@
             <a href="../../login.php"><i class="fas fa-user"></i> ACCEDI/REGISTRATI </a>
         </li>
         <li>
-            <a href="../../shop.php"><i class="fas fa-shopping-bag"></i> ACQUISTA I BIGLIETTI </a>
+            <a href="../../shop_xml.php"><i class="fas fa-shopping-bag"></i> ACQUISTA I BIGLIETTI </a>
         </li>
     </ul>
 </div>

@@ -1,4 +1,4 @@
-<!-- Codice HTML/JavaScrpit per la creazione della barra di navigazione della Home (index.php) -->
+<!-- Codice HTML per la creazione della barra di navigazione della Home (index.php) -->
 
 <div class="nav">
     <ul>
@@ -6,7 +6,7 @@
             <a href="login.php"><i class="fas fa-user"></i> ACCEDI/REGISTRATI </a>
         </li>
         <li>
-            <a href="shop.php"><i class="fas fa-shopping-bag"></i> ACQUISTI I BIGLIETTI </a>
+            <a href="shop_xml.php"><i class="fas fa-shopping-bag"></i> ACQUISTI I BIGLIETTI </a>
         </li>
     </ul>
 </div>

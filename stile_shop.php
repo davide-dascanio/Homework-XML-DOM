@@ -3,7 +3,7 @@ $stile_shop = "
 <style type=\"text/css\">
 
 
-    /* PARTE DI STILE USATO IN shop.php, carrello.php, riepilogo.php e pagamento.php */
+    /* PARTE DI STILE USATO IN shop_xml.php, carrello_xml.php, riepilogo_xml.php e pagamento_xml.php */
 
     * {
         margin: 0;
@@ -98,7 +98,7 @@ $stile_shop = "
 
 
 
-    /* PARTE DI STILE USATO SOLO IN shop.php */
+    /* PARTE DI STILE USATO SOLO IN shop_xml.php */
     
     /* Container dei biglietti delle meraviglie */
     .container-meraviglie {
@@ -179,7 +179,7 @@ $stile_shop = "
 
 
 
-    /* PARTE DI STILE USATO SOLO IN shop.php e carrello.php */
+    /* PARTE DI STILE USATO SOLO IN shop_xml.php e carrello_xml.php */
 
     /* Notifica carrello */
     .messaggio-aggiunto {
@@ -220,7 +220,7 @@ $stile_shop = "
 
     
 
-    /* PARTE DI STILE USATO SOLO IN carrello.php */
+    /* PARTE DI STILE USATO SOLO IN carrello_xml.php */
 
     .container-carrello {
         flex: 1;           /* fa crescere gli elementi per occupare tutto lo spazio disponibile nel contenitore */
@@ -378,7 +378,7 @@ $stile_shop = "
 
 
 
-    /* PARTE DI STILE USATO SOLO IN riepilogo.php */
+    /* PARTE DI STILE USATO SOLO IN riepilogo_xml.php */
 
     .container-riepilogo {
         flex: 1;
@@ -534,7 +534,7 @@ $stile_shop = "
 
 
 
-    /* PARTE DI STILE USATO SOLO IN pagamento.php */
+    /* PARTE DI STILE USATO SOLO IN pagamento_xml.php */
     
     .container-pagamento {
         flex: 1;
