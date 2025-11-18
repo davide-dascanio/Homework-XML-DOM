@@ -3,7 +3,7 @@ $stile_shop = "
 <style type=\"text/css\">
 
 
-    /* PARTE DI STILE USATO IN shop_xml.php, carrello_xml.php, riepilogo_xml.php e pagamento_xml.php */
+    /* PARTE DI STILE USATO IN shop_xml.php, carrello.php, riepilogo_xml.php e pagamento_xml.php */
 
     * {
         margin: 0;
@@ -27,7 +27,7 @@ $stile_shop = "
     .contenuto-navbar {
         align-items: center;
         justify-content: center;
-        max-width: 1200px;
+        max-width: 1300px;
         margin: 0 auto;
         display: flex;
     }
@@ -58,7 +58,7 @@ $stile_shop = "
     /* Container principale */
     .container-principale {
         display: flex;
-        max-width: 1200px;
+        max-width: 1300px;
         margin: 30px auto;
         padding: 0 20px;
     }
@@ -112,7 +112,7 @@ $stile_shop = "
         background: #17181b;
         border: 1px solid #26272b;
         border-radius: 12px;
-        width: 280px;
+        width: 300px;
         display: flex;
         flex-direction: column;
     }
@@ -137,7 +137,55 @@ $stile_shop = "
         margin-bottom: 10px;
         color: #f6f7f9;
     }
-    
+
+    .info-scheda {
+        display: flex; 
+        gap: 10px; 
+        margin: 8px 0; 
+        flex-wrap: wrap;
+    }
+
+    .info {
+        background: #26272b; 
+        color: #2ec4b6; 
+        padding: 4px 10px; 
+        border-radius: 5px; 
+        font-size: 0.75em; 
+        font-weight: bold;
+    }
+
+    .descrizione-scheda {
+        color: #a3a6ad; 
+        font-size: 0.9em; 
+        margin: 10px 0; 
+        line-height: 1.4;
+    }
+
+    .caratt-scheda {
+        background: #17181b; 
+        padding: 12px; 
+        border-radius: 8px; 
+        margin: 12px 0; 
+        font-size: 0.85em;
+    }
+
+    .dettagli {
+        color: #2ec4b6; 
+        font-weight: bold; 
+        margin-bottom: 8px;
+    }
+
+    .caratt {
+        color: #f6f7f9; 
+        margin: 5px 0;
+        display: flex;
+    }
+
+    .stile-icona {
+        color: #2ec4b6; 
+        width: 20px;
+    }
+
     .righa-carrello {
         display: flex;
         justify-content: space-between; 
@@ -169,6 +217,29 @@ $stile_shop = "
         filter: brightness(1.1);  /* aumenta la luminosità di un elemento del 10% rispetto all'immagine originale */
     }
 
+    .bottone-esaurito {
+        background: #e74c3c; 
+        color: #ecf0f1; 
+        border: none; 
+        border-radius: 6px; 
+        font-weight: bold; 
+        font-size: 13px; 
+        padding: 8px 12px; 
+        cursor: not-allowed; 
+        opacity: 0.6;
+    }
+
+    .bottone-limitato {
+        background: #f39c12; 
+        color: white; 
+        border: none; 
+        border-radius: 6px; 
+        font-weight: bold; 
+        font-size: 13px; 
+        padding: 8px 12px; 
+        cursor: not-allowed; 
+        opacity: 0.8;
+    }
 
 
 
@@ -179,7 +250,13 @@ $stile_shop = "
 
 
 
-    /* PARTE DI STILE USATO SOLO IN shop_xml.php e carrello_xml.php */
+
+
+
+
+
+
+    /* PARTE DI STILE USATO SOLO IN shop_xml.php e carrello.php */
 
     /* Notifica carrello */
     .messaggio-aggiunto {
@@ -220,7 +297,7 @@ $stile_shop = "
 
     
 
-    /* PARTE DI STILE USATO SOLO IN carrello_xml.php */
+    /* PARTE DI STILE USATO SOLO IN carrello.php */
 
     .container-carrello {
         flex: 1;           /* fa crescere gli elementi per occupare tutto lo spazio disponibile nel contenitore */
@@ -345,7 +422,7 @@ $stile_shop = "
         font-size: 16px;
         font-weight: bold;
         text-decoration: none;
-        margin-left: auto;
+        margin-left: 281px;
     }
 
     .bottone-grigio:hover {
