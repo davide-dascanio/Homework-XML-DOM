@@ -45,24 +45,6 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
                 exit();
             }
             
-            //creazione tabella Biglietti
-            $sqlQuery = "CREATE TABLE if not exists $Biglietti_table_name (";
-            $sqlQuery.= "bigliettoId int NOT NULL auto_increment, primary key (bigliettoId), ";
-            $sqlQuery.= "nome varchar (50) NOT NULL, ";
-            $sqlQuery.= "costoBiglietto float";
-            $sqlQuery.= ");";
-
-            //echo "<pre>$sqlQuery</pre>";
-
-            //verifica creazione tabella Biglietti
-            if ($resultQ = mysqli_query($mysqliConnection, $sqlQuery))
-                printf("La tabella Biglietti è stata creata <br />\n");
-            else {
-                printf("Errore nella creazione della tabella Biglietti! <br />\n");
-                exit();
-            }
-
-            //echo "<br />Messaggi relativi all'ultimo errore: " . mysqli_errno($mysqliConnection). "<br /><br />\n";
 
         //popolamento tabelle
             //popolamento Utenti (NB: userId gestito automaticamente)
@@ -92,105 +74,6 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
                 exit();
             }
 
-
-            //popolamento Biglietti (NB: bigliettoId gestito automaticamente)
-            $sql = "INSERT INTO $Biglietti_table_name
-                    (nome, costoBiglietto)
-                    VALUES
-                    (\"Grande Muraglia Cinese, Cina\", \"300\")
-                    ";
-
-            if ($resultQ = mysqli_query($mysqliConnection, $sql))
-                printf("Biglietto inserito correttamente <br />\n");
-            else {
-                printf("Errore inserimento biglietto <br />\n");
-                exit();
-            }
-
-
-            $sql = "INSERT INTO $Biglietti_table_name
-                    (nome, costoBiglietto)
-                    VALUES
-                    (\"Petra, Giordania\", \"80\")
-                    ";
-
-            if ($resultQ = mysqli_query($mysqliConnection, $sql))
-                printf("Biglietto inserito correttamente <br />\n");
-            else {
-                printf("Errore inserimento biglietto <br />\n");
-                exit();
-            }
-
-
-            $sql = "INSERT INTO $Biglietti_table_name
-                    (nome, costoBiglietto)
-                    VALUES
-                    (\"Cristo Redentore, Rio de Janeiro\", \"50\")
-                    ";  
-
-            if ($resultQ = mysqli_query($mysqliConnection, $sql))
-                printf("Biglietto inserito correttamente <br />\n");
-            else {
-                printf("Errore inserimento biglietto <br />\n");
-                exit();
-            }
-
-
-            $sql = "INSERT INTO $Biglietti_table_name
-                    (nome, costoBiglietto)
-                    VALUES
-                    (\"Machu Picchu, Cusco - Perù\", \"150\")
-                    ";  
-
-            if ($resultQ = mysqli_query($mysqliConnection, $sql))
-                printf("Biglietto inserito correttamente <br />\n");
-            else {
-                printf("Errore inserimento biglietto <br />\n");
-                exit();
-            }
-
-            
-            $sql = "INSERT INTO $Biglietti_table_name
-                    (nome, costoBiglietto)
-                    VALUES
-                    (\"Chichén Itzá, Yucatàn - Messico\", \"120\")
-                    ";  
-
-            if ($resultQ = mysqli_query($mysqliConnection, $sql))
-                printf("Biglietto inserito correttamente <br />\n");
-            else {
-                printf("Errore inserimento biglietto <br />\n");
-                exit();
-            }
-
-
-            $sql = "INSERT INTO $Biglietti_table_name
-                    (nome, costoBiglietto)
-                    VALUES
-                    (\"Colosseo, Roma - Italia\", \"70\")
-                    ";  
-
-            if ($resultQ = mysqli_query($mysqliConnection, $sql))
-                printf("Biglietto inserito correttamente <br />\n");
-            else {
-                printf("Errore inserimento biglietto <br />\n");
-                exit();
-            }
-
-
-            $sql = "INSERT INTO $Biglietti_table_name
-                    (nome, costoBiglietto)
-                    VALUES
-                    (\"Taj Mahal, Agra - India\", \"100\")
-                    ";
-
-            if ($resultQ = mysqli_query($mysqliConnection, $sql))
-                printf("Biglietto inserito correttamente <br />\n");
-            else {
-                printf("Errore inserimento biglietto <br />\n");
-                exit();
-            }
-            
             
             //chiudiamo la connessione
             $mysqliConnection->close();
