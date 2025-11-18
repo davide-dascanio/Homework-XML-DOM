@@ -1,0 +1,18 @@
+<!ELEMENT catalogo (biglietto+)>
+
+<!ELEMENT biglietto (nome, prezzo, descrizione, caratteristiche)>
+<!ATTLIST biglietto
+    id CDATA #REQUIRED
+    categoria (culturale | naturale | storica | religiosa) #REQUIRED
+    disponibilita (disponibile | esaurito | limitato) "disponibile"
+    lingua (italiano | inglese | francese | spagnolo) "italiano"
+>
+
+<!ELEMENT nome (#PCDATA)>
+<!ELEMENT prezzo (#PCDATA)>
+<!ELEMENT descrizione (#PCDATA)>
+
+<!ELEMENT caratteristiche (durata, guida, accessibilita?)>
+<!ELEMENT durata (#PCDATA)>
+<!ELEMENT guida (#PCDATA)>
+<!ELEMENT accessibilita (#PCDATA)>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE catalogo SYSTEM "data.dtd">
+<catalogo>
+    <biglietto id="t001" categoria="storica" disponibilita="disponibile" lingua="italiano">
+        <nome>Grande Muraglia, Cina</nome>
+        <prezzo>29.90</prezzo>
+        <descrizione>Visita standard alla Grande Muraglia</descrizione>
+        <caratteristiche>
+            <durata>3 ore</durata>
+            <guida>Inclusa</guida>
+            <accessibilita>Parziale</accessibilita>
+        </caratteristiche>
+    </biglietto>
+
+    <biglietto id="t002" categoria="storica" disponibilita="esaurito" lingua="italiano">
+        <nome>Petra, Giordania</nome>
+        <prezzo>35.50</prezzo>
+        <descrizione>Tour della città antica di Petra</descrizione>
+        <caratteristiche>
+            <durata>5 ore</durata>
+            <guida>Inclusa</guida>
+            <accessibilita>Difficile</accessibilita>
+        </caratteristiche>
+    </biglietto>
+
+    <biglietto id="t003" categoria="religiosa" disponibilita="limitato" lingua="italiano">
+        <nome>Cristo Redentore, Rio de Janeiro</nome>
+        <prezzo>28.00</prezzo>
+        <descrizione>Visita al Cristo Redentore</descrizione>
+        <caratteristiche>
+            <durata>2 ore</durata>
+            <guida>Opzionale</guida>
+            <accessibilita>Facile</accessibilita>
+        </caratteristiche>
+    </biglietto>
+
+    <biglietto id="t004" categoria="storica" disponibilita="limitato" lingua="italiano">
+        <nome>Machu Picchu, Cusco - Perù</nome>
+        <prezzo>42.00</prezzo>
+        <descrizione>Escursione a Machu Picchu</descrizione>
+        <caratteristiche>
+            <durata>6 ore</durata>
+            <guida>Inclusa</guida>
+            <accessibilita>Difficile</accessibilita>
+        </caratteristiche>
+    </biglietto>
+
+    <biglietto id="t005" categoria="culturale" disponibilita="disponibile" lingua="italiano">
+        <nome>Chichén Itzá, Yucatàn - Messico</nome>
+        <prezzo>31.50</prezzo>
+        <descrizione>Visita guidata a Chichén Itzá</descrizione>
+        <caratteristiche>
+            <durata>4 ore</durata>
+            <guida>Inclusa</guida>
+            <accessibilita>Facile</accessibilita>
+        </caratteristiche>
+    </biglietto>
+
+    <biglietto id="t006" categoria="storica" disponibilita="disponibile" lingua="italiano">
+        <nome>Colosseo, Roma - Italia</nome>
+        <prezzo>25.00</prezzo>
+        <descrizione>Tour del Colosseo romano</descrizione>
+        <caratteristiche>
+            <durata>2.5 ore</durata>
+            <guida>Inclusa</guida>
+            <accessibilita>Facile</accessibilita>
+        </caratteristiche>
+    </biglietto>
+
+    <biglietto id="t007" categoria="religiosa" disponibilita="disponibile" lingua="italiano">
+        <nome>Taj Mahal, Agra - India</nome>
+        <prezzo>38.00</prezzo>
+        <descrizione>Visita al Taj Mahal</descrizione>
+        <caratteristiche>
+            <durata>3 ore</durata>
+            <guida>Opzionale</guida>
+            <accessibilita>Facile</accessibilita>
+        </caratteristiche>
+    </biglietto>
+</catalogo>
