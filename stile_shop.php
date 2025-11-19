@@ -577,7 +577,6 @@ $stile_shop = "
         font-size: 16px;
         font-weight: bold;
         text-decoration: none;
-        margin-left: auto;
     }
 
     .bottone-grey:hover {

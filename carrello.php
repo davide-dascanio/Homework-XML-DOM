@@ -115,9 +115,9 @@
 
                                 <input type="reset" name="annullaSelezionati" class="bottone-bianco" value="Deseleziona Tutto" />
 
-                                <a href="shop_xml.php" class="bottone-grigio"> Continua Acquisti </a>
+                                <a href="shop_xml.php" class="bottone-grigio"> Continua acquisti </a>
                                 
-                                <a href="riepilogo_xml.php" class="bottone-acqua"> Vai al Pagamento </a>
+                                <a href="riepilogo_xml.php" class="bottone-acqua"> Vai al pagamento </a>
                             </div>
                         </form>
                         <?php 
