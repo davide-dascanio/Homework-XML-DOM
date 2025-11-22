@@ -1,0 +1,18 @@
+<!ELEMENT ordini (ordine*)>
+
+<!ELEMENT ordine (username, date, totale, articoli)>
+<!ATTLIST ordine
+    id CDATA #REQUIRED
+>
+
+<!ELEMENT username (#PCDATA)>
+<!ELEMENT date (#PCDATA)>
+<!ELEMENT totale (#PCDATA)>
+
+<!ELEMENT articoli (articolo+)>
+<!ELEMENT articolo (biglietto, prezzo, quantita)>
+
+<!ELEMENT biglietto (#PCDATA)>
+<!ELEMENT prezzo (#PCDATA)>
+<!ELEMENT quantita (#PCDATA)>
+
