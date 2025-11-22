@@ -514,7 +514,7 @@ $stile_shop = "
 
     .immagine-articolo {
         width: 80px;
-        height: 80px;
+        height: 60px;
         object-fit: cover;    /* immagine viene ridimensionata per adattarsi al suo contenitore */
         border-radius: 8px;
         margin-right: 20px;
@@ -525,15 +525,16 @@ $stile_shop = "
     }
 
     .nome-articolo {
-        font-size: 16px;
+        font-size: 18px;
         font-weight: bold;
         color: #f6f7f9;
+        margin-bottom: 5px;
     }
 
     .prezzo-articolo {
-        font-size: 18px;
+        font-size: 14px;
         font-weight: bold;
-        color: #2ec4b6;
+        color: white;
         background: #26272b;
         padding: 8px 16px;
         border-radius: 6px;

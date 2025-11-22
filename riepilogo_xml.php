@@ -10,10 +10,33 @@
         exit();
     }
 
-    // Connessione al database
-    require_once('./connessione1.php');
 
     require_once('./stile_shop.php');
+
+
+    // Verifichiamo se il file xml esiste
+    if (!file_exists('data.xml')) {
+        die("Errore: file data.xml non trovato");
+    }
+
+    
+    // Costruiamo una stringa con il contenuto del file
+    $xmlString = "";
+    foreach ( file("data.xml") as $node ) {
+	    $xmlString .= trim($node);
+    }
+
+    // Creazione del documento
+    $doc = new DOMDocument();
+
+    // Carica contentuo del file nel documento $doc con DOM
+    if (!$doc->loadXML($xmlString)) {
+        die("Errore durante il parsing");
+    }
+
+    // $biglietti è la lista degli elementi figli della radice catalogo del documento XML data.xml
+    $biglietti = $doc->documentElement->childNodes;
+
 
     // Array immagini
     $immagini = array(
@@ -25,29 +48,6 @@
         "Colosseo, Roma - Italia" => "./file/collegamento_6/img/colosseo-roma.jpg",
         "Taj Mahal, Agra - India" => "./file/collegamento_7/img/taj_mahal.jpg"
     );
-
-
-    // Verifichiamo se il file xml esiste
-    if (!file_exists('data.xml')) {
-        die("Errore: file data.xml non trovato");
-    }
-
-    // Costruiamo una stringa con il contenuto del file
-    $xmlString = "";
-    foreach ( file("data.xml") as $node ) {
-	    $xmlString .= trim($node);
-    }
-
-
-    $doc = new DOMDocument();
-
-    // Carica contentuo del file nel documento $doc con DOM
-    if (!$doc->loadXML($xmlString)) {
-        die("Errore nel parsing di data.xml");
-    }
-
-    // $biglietti è la lista degli elementi figli della radice catalogo del documento XML data.xml
-    $biglietti = $doc->documentElement->childNodes;
 
     
     // Crea una mappa del tipo:  nome → prezzo  dal DOM
@@ -66,20 +66,33 @@
 
     // Calcola il totale da pagare
     $_SESSION['daPagare'] = 0;
-    $articoli = array();
+    // Raggruppa gli articoli uguali
+    $articoliRaggruppati = array(); // Array per raggruppare
 
-    foreach ($_SESSION['carrello'] as $indice => $nomeBiglietto) {
+    // Conta le occorrenze di ogni biglietto nel carrello
+    // Avremo una cosa del genere: Array ( [Grande Muraglia, Cina] => 2 [Cristo Redentore, Rio de Janeiro] => 2 )
+    $conteggioCarrello = array_count_values($_SESSION['carrello']);
+    //print_r($conteggioCarrello);
+
+    foreach ($conteggioCarrello as $nomeBiglietto => $quantita) {
         if (isset($catalogoMap[$nomeBiglietto])) {
-            $prezzo = $catalogoMap[$nomeBiglietto];
-            $_SESSION['daPagare'] += $prezzo;
+            $prezzoUnitario = $catalogoMap[$nomeBiglietto];
+            $subtotale = $prezzoUnitario * $quantita;
             
-            $articoli[] = array(
+            // Accumula totale generale
+            $_SESSION['daPagare'] += $subtotale;
+            
+            // Aggiungi all'array raggruppato
+            $articoliRaggruppati[] = array(
                 'nome' => $nomeBiglietto,
-                'prezzo' => $catalogoMap[$nomeBiglietto],
+                'prezzoUnitario' => $prezzoUnitario,
+                'quantita' => $quantita,
+                'subtotale' => $subtotale,
                 'immagine' => isset($immagini[$nomeBiglietto]) ? $immagini[$nomeBiglietto] : 'bianco.jpg'
             );
         }
     }
+    //print_r($_POST);
 ?>
 
 <?xml version="1.0" encoding="UTF-8"?>
@@ -109,7 +122,7 @@
         <div class="valore-sidebar"><?php echo $_SESSION['cognome']; ?></div>
         
         <div class="etichetta-sidebar">Finora hai speso:</div>
-        <div class="valore-sidebar"><?php echo $_SESSION['spesaFinora']; ?> €</div>
+        <div class="valore-sidebar"><?php echo $_SESSION['spesaFinora']; ?> &euro;</div>
         
         <div class="etichetta-sidebar">Ti sei collegato alle:</div>
         <div class="valore-sidebar"><?php echo date('g:i a', $_SESSION['dataLogin']); ?></div>
@@ -129,13 +142,16 @@
                 </div>
         <?php }else{ ?>
                 <div class="riepilogo-pieno">
-                    <?php foreach ($articoli as $k => $articolo){  ?>
+                    <?php foreach ($articoliRaggruppati as $k => $articolo){  ?>
                             <div class="articolo-riepilogo">
-                                <img src="<?php echo $articolo['immagine']; ?>" alt="<?php echo $articolo['nome']; ?>" class="immagine-articolo" />
+                                <img src="<?php echo $articolo['immagine']; ?>" alt="<?php echo $articolo['nome']; ?>" class="immagine-articolo"/>
                                 <div class="info-articolo">
                                     <div class="nome-articolo"><?php echo $articolo['nome']; ?></div>
+                                    <div class="prezzo-articolo">
+                                        <?php echo $articolo['quantita']; ?> x <?php echo $articolo['prezzoUnitario']; ?> &euro; = 
+                                        <span style="color: #2ec4b6;"><?php echo $articolo['subtotale']; ?> &euro;</span>
+                                    </div>
                                 </div>
-                                <div class="prezzo-articolo"><?php echo $articolo['prezzo']; ?> &euro; </div>
                             </div>
                     <?php }  ?>
                 </div>

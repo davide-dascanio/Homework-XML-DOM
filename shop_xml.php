@@ -10,9 +10,6 @@
         exit();
     }
 
-    //apertura della connessione
-    require_once("./connessione1.php");
-
     require_once("./stile_shop.php");
 
     // Verifichiamo se il file xml che vogliamo caricare esiste
@@ -31,14 +28,14 @@
 
     // Carica contentuo del file (appiattito), nel documento $doc con DOM
     if (!$doc->loadXML($xmlString)) {
-        die("Errore nel parsing di data.xml");
+        die("Errore durante il parsing");
     }
 
     // Validazione DTD
     if ($doc->validate()) {
-        $validDTD = "Questo documento è valido";
+        $validDTD = "Il file XML data.xml è valido";
     } else  {
-        $validDTD = "Questo documento non è valido";
+        $validDTD = "Il file XML data.xml non è valido";
     }
 
 
@@ -55,9 +52,6 @@
         "Colosseo, Roma - Italia" => "./file/collegamento_6/img/colosseo-roma.jpg",
         "Taj Mahal, Agra - India" => "./file/collegamento_7/img/taj_mahal.jpg"
     );
-
-    //chiudiamo la connessione
-    $mysqliConnection->close();
 
 ?>
 
@@ -89,8 +83,8 @@
                     <a href="carrello.php">Vai al carrello (<?php echo count($_SESSION['carrello']); ?> articoli)</a> oppure
                     <a href="riepilogo_xml.php">Vai al pagamento (<?php echo count($_SESSION['carrello']); ?> articoli)</a>  <!-- Conta il numero di articoli nel carrello -->
                 </div>
-        <?php  } ?>
-    <?php  } ?>
+     <?php  } ?>
+ <?php  } ?>
 
 
     <div class="container-principale">
@@ -107,7 +101,7 @@
             <div class="valore-sidebar"><?php echo $_SESSION['cognome']; ?></div>
             
             <div class="etichetta-sidebar">Finora hai speso:</div>
-            <div class="valore-sidebar"><?php echo $_SESSION['spesaFinora']; ?> €</div>
+            <div class="valore-sidebar"><?php echo $_SESSION['spesaFinora']; ?> &euro;</div>
             
             <div class="etichetta-sidebar">Ti sei collegato alle:</div>
             <div class="valore-sidebar"><?php echo date('g:i a', $_SESSION['dataLogin']); ?></div>

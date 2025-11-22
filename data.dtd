@@ -12,7 +12,7 @@
 <!ELEMENT prezzo (#PCDATA)>
 <!ELEMENT descrizione (#PCDATA)>
 
-<!ELEMENT caratteristiche (durata, guida, accessibilita?)>
+<!ELEMENT caratteristiche (durata, guida, accessibilita)>
 <!ELEMENT durata (#PCDATA)>
 <!ELEMENT guida (#PCDATA)>
 <!ELEMENT accessibilita (#PCDATA)>
