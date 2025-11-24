@@ -683,40 +683,6 @@ $stile_shop = "
         color: #2ec4b6;
     }
 
-    .container-errore {
-        background: #17181b;
-        border: 2px solid #e74c3c;
-        border-radius: 12px;
-        padding: 50px;
-        text-align: center;
-        margin-bottom: 30px;
-    }
-
-    .icona-errore {
-        background: #e74c3c;
-        color: white;
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;   /* questo è un cerchio */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 48px;
-        font-weight: bold;
-        margin: 0 auto 20px auto;
-    }
-
-    .titolo-errore {
-        font-size: 32px;
-        color: #e74c3c;
-        margin-bottom: 15px;
-    }
-
-    .testo-errore {
-        font-size: 18px;
-        color: #a3a6ad;
-    }
-    
     .container-azioni {
         display: flex;
         justify-content: center;
@@ -752,6 +718,74 @@ $stile_shop = "
     .bottone:hover {
         filter: brightness(1.1);
     }
+
+    .container-conferma {
+        text-align: center; 
+        padding: 40px;
+    }
+
+    .icona-allerta {
+        font-size: 3em; 
+        color: #f39c12; 
+        margin-bottom: 20px;
+    }
+
+    .titolo-conferma {
+        color: #2ec4b6; 
+        font-size: 2em; 
+        margin-bottom: 20px;
+    }
+
+    .testo-conferma {
+        color: #f6f7f9; 
+        font-size: 1.3em; 
+        margin-bottom: 10px;
+    }
+
+    .importo-conferma {
+        font-size: 3em; 
+        color: #2ec4b6; 
+        font-weight: bold; 
+        margin: 30px 0;
+    }
+
+    .container-errore {
+        background: #17181b;
+        border: 2px solid #e74c3c;
+        border-radius: 12px;
+        padding: 50px;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .icona-errore {
+        background: #e74c3c;
+        color: white;
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;   /* questo è un cerchio */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 48px;
+        font-weight: bold;
+        margin: 0 auto 20px auto;
+    }
+
+    .titolo-errore {
+        font-size: 32px;
+        color: #e74c3c;
+        margin-bottom: 15px;
+    }
+
+    .testo-errore {
+        font-size: 18px;
+        color: #a3a6ad;
+    }
+    
+    
+
+    
 
     
 </style>
