@@ -67,7 +67,7 @@
             $nuovoTotale = $_SESSION['daPagare'] + $_SESSION['spesaFinora'];
             
             // SCRITTURA ORDINE IN ordini.xml
-
+            
             // Carica o crea ordini.xml
             if (file_exists('ordini.xml')) {
                 $xmlStringOrdini = "";
@@ -239,9 +239,14 @@
                         </div>
                     </div>
                 </div>
+                <div class="box-info">
+                    <div class="contenuto-info">
+                        <div style="color: #a3a6ad; font-size: 20px;">Per vedere la cronologia degli ordini: </div>
+                        <a href="ordini_utente.php" class="bottone"><i class="fas fa-box"></i> I Miei Ordini </a>
+                    </div>
+                </div>
                 <div class="container-azioni">
                     <a href="shop_xml.php" class="bottone-back">Torna al Catalogo</a>
-                    <a href="ordini_utente.php" class="bottone">I miei ordini</a>
                     <a href="logout.php" class="bottone">Esci</a>
                 </div>
        <?php }else{

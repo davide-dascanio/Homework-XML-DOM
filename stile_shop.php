@@ -683,6 +683,22 @@ $stile_shop = "
         color: #2ec4b6;
     }
 
+    .box-info {
+        background: #17181b; 
+        padding: 20px; 
+        border-radius: 12px; 
+        border-left: 4px solid #2ec4b6; 
+        margin: 20px 0 40px 0;
+    }
+
+    .contenuto-info {
+        display: flex; 
+        justify-content: space-between; 
+        align-items: center; 
+        flex-wrap: wrap; 
+        gap: 15px;
+    }
+    
     .container-azioni {
         display: flex;
         justify-content: center;
