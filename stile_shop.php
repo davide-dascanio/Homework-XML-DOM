@@ -798,10 +798,125 @@ $stile_shop = "
         font-size: 18px;
         color: #a3a6ad;
     }
-    
-    
 
+    .stile-bottone {
+        margin-top: 30px; 
+        text-align: center;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /* PARTE DI STILE USATO SOLO IN ordini_utente.php */
     
+    .container-ordini {
+        flex: 1;
+    }
+
+    .titolo-ordini {
+        font-size: 28px;
+        color: #f6f7f9;
+        margin-bottom: 30px;
+    }
+
+    .ordini-vuoto {
+        background: #17181b;
+        border: 1px solid #26272b;
+        border-radius: 12px;
+        padding: 60px;  
+        text-align: center;
+    }
+
+    .ordini-vuoto p {
+        font-size: 20px;
+        color: #a3a6ad;
+        margin-bottom: 30px;
+    }
+
+    .ordini-vuoto a {
+        background: #27ae60;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 8px;
+        border: none;
+        font-size: 15px;
+        font-weight: bold;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .ordini-vuoto a:hover {
+        background: #229954;
+    }
+
+    .ordini-pieno {
+        background: #17181b;
+        border: 1px solid #26272b;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 30px;
+    }
+
+    .header-ordine {
+        padding: 20px; 
+        border-bottom: 2px solid #2ec4b6; 
+        background: #1a1b1e;
+        border-radius: 8px 8px 0 0;
+    }
+
+    .contenuto-header {
+        display: flex; 
+        justify-content: space-between; 
+        align-items: center;
+    }
+    
+    .articolo-ordine {
+        display: flex;
+        align-items: center;
+        padding: 15px 20px;
+        border-bottom: 1px solid #26272b;
+    }
+
+    .nome-articolo {
+        font-size: 18px;
+        font-weight: bold;
+        color: #f6f7f9;
+        margin-bottom: 5px;
+    }
+
+    .totale {
+        background: #1a1b1e; 
+        padding: 20px; 
+        border-radius: 8px; 
+        text-align: right; 
+        margin-top: 20px;
+    }
+
+    .text-totale {
+        color: #a3a6ad; 
+        margin-bottom: 5px;
+    }
+
+    .price-totale {
+        font-size: 28px; 
+        color: #2ec4b6; 
+        font-weight: bold;
+    }
+
 
     
 </style>

@@ -11,6 +11,9 @@
     }
 
 
+    // Connessione al database
+    require_once("./connessione1.php");
+
     require_once("./stile_shop.php");
 
 
@@ -67,7 +70,7 @@
             $nuovoTotale = $_SESSION['daPagare'] + $_SESSION['spesaFinora'];
             
             // SCRITTURA ORDINE IN ordini.xml
-            
+
             // Carica o crea ordini.xml
             if (file_exists('ordini.xml')) {
                 $xmlStringOrdini = "";
@@ -81,8 +84,8 @@
                 $ordini = $docOrdini->documentElement;
             } else {
                 // Crea documento
-                // Aggiungi dichiarazione DOCTYPE
-                $implementation=newDOMImplementation();
+                // Aggiunge dichiarazione DOCTYPE
+                $implementation = new DOMImplementation();
                 $dtd=$implementation->createDocumentType('ordini','','ordini.dtd');
                 $docOrdini=$implementation->createDocument('','',$dtd);
                 $docOrdini->encoding ='UTF-8';
@@ -105,7 +108,7 @@
             $nuovoOrdine->appendChild($elemUsername);
 
             // <date>
-            $elemDate = $docOrdini->createElement('date', date('Y-m-d H:i:s'));
+            $elemDate = $docOrdini->createElement('date', date('d-m-Y H:i:s'));
             $nuovoOrdine->appendChild($elemDate);
 
             // <totale>
@@ -143,11 +146,11 @@
                 $elemArticolo = $docOrdini->createElement('articolo');
 
                 // Figli di <articolo>: <biglietto>, <prezzo>, <quantita>
-                $elemNome = $docOrdini->createElement('biglietto', $nomeBiglietto);
+                $elemBiglietto = $docOrdini->createElement('biglietto', $nomeBiglietto);
                 $elemPrezzo = $docOrdini->createElement('prezzo', $prezzoTrovato);
                 $elemQuantita = $docOrdini->createElement('quantita', $quantita);
 
-                $elemArticolo->appendChild($elemNome);
+                $elemArticolo->appendChild($elemBiglietto);
                 $elemArticolo->appendChild($elemPrezzo);
                 $elemArticolo->appendChild($elemQuantita);
                 
@@ -163,21 +166,36 @@
             // Aggiungi ordine alla radice <ordini>, ma come nuovo primo figlio
             $ordini->insertBefore($nuovoOrdine,$primoOrdine);
             
-            
+                
             // Salva su file
             $filename="ordini.xml";
-            if ($docOrdini->save( $filename)) {
-                $pagamentoOk = true;
+            if ($docOrdini->save($filename)){
+                // QUERY UPDATE: aggiorna la spesa dell'utente
+                $sql = "UPDATE $Utenti_table_name 
+                        SET sommeSpese = \"$nuovoTotale\" 
+                        WHERE username = \"{$_SESSION['username']}\"";
+                
+                // Eseguiamo la query e la controlliamo
+                if (!mysqli_query($mysqliConnection, $sql) || mysqli_affected_rows($mysqliConnection) != 1) {
+                    printf("Errore nella gestione del pagamento: %s\n", mysqli_error($mysqliConnection));
+                    // UPDATE fallito: elimina l'ordine appena salvato nell'XML 
+                    $ordini->removeChild($nuovoOrdine);
+                    $docOrdini->save($filename);
+                    $messaggio = "Errore nell'aggiornamento della spesa totale.";
+                }else{
+                    // SUCCESSO
+                    $pagamentoOk = true;
 
-                // Aggiorna la sessione con il nuovo totale
-                $_SESSION['spesaFinora'] = $nuovoTotale;
-                
-                // Svuotiamo il carrello
-                $_SESSION['carrello'] = array();
-                $_SESSION['daPagare'] = 0;
-                
-                $messaggio = "il pagamento è stato completato con successo";
-            } else {
+                    // Aggiorna la sessione con il nuovo totale
+                    $_SESSION['spesaFinora'] = $nuovoTotale;
+                    
+                    // Svuotiamo il carrello
+                    $_SESSION['carrello'] = array();
+                    $_SESSION['daPagare'] = 0;
+                    
+                    $messaggio = "il pagamento è stato completato con successo";
+                }
+            }else{
                 $messaggio = "Si è verificato un problema durante il salvataggio dell'ordine.";
             }
         }

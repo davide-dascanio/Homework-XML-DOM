@@ -2,15 +2,114 @@
 <!DOCTYPE ordini SYSTEM "ordini.dtd">
 <!-- Gli ordini verranno aggiunti qui automaticamente-->
 <ordini>
-  <ordine id="4244">
-    <username>mario.11</username>
-    <date>2025-11-24 20:04:19</date>
-    <totale>56</totale>
+  <ordine id="7593">
+    <username>luigi.verdi11</username>
+    <date>25-11-2025 22:48:32</date>
+    <totale>29.9</totale>
     <articoli>
+      <articolo>
+        <biglietto>Grande Muraglia, Cina</biglietto>
+        <prezzo>29.90</prezzo>
+        <quantita>1</quantita>
+      </articolo>
+    </articoli>
+  </ordine>
+  <ordine id="973">
+    <username>luigi.verdi11</username>
+    <date>25-11-25 22:48:12</date>
+    <totale>29.9</totale>
+    <articoli>
+      <articolo>
+        <biglietto>Grande Muraglia, Cina</biglietto>
+        <prezzo>29.90</prezzo>
+        <quantita>1</quantita>
+      </articolo>
+    </articoli>
+  </ordine>
+  <ordine id="4507">
+    <username>luigi.verdi11</username>
+    <date>2025-11-25 19:19:56</date>
+    <totale>61.4</totale>
+    <articoli>
+      <articolo>
+        <biglietto>Grande Muraglia, Cina</biglietto>
+        <prezzo>29.90</prezzo>
+        <quantita>1</quantita>
+      </articolo>
+      <articolo>
+        <biglietto>Chichén Itzá, Yucatàn - Messico</biglietto>
+        <prezzo>31.50</prezzo>
+        <quantita>1</quantita>
+      </articolo>
+    </articoli>
+  </ordine>
+  <ordine id="181">
+    <username>luigi.verdi11</username>
+    <date>2025-11-25 19:19:08</date>
+    <totale>99.9</totale>
+    <articoli>
+      <articolo>
+        <biglietto>Grande Muraglia, Cina</biglietto>
+        <prezzo>29.90</prezzo>
+        <quantita>1</quantita>
+      </articolo>
       <articolo>
         <biglietto>Cristo Redentore, Rio de Janeiro</biglietto>
         <prezzo>28.00</prezzo>
+        <quantita>1</quantita>
+      </articolo>
+      <articolo>
+        <biglietto>Machu Picchu, Cusco - Perù</biglietto>
+        <prezzo>42.00</prezzo>
+        <quantita>1</quantita>
+      </articolo>
+    </articoli>
+  </ordine>
+  <ordine id="9801">
+    <username>luigi.verdi11</username>
+    <date>2025-11-25 19:09:03</date>
+    <totale>29.9</totale>
+    <articoli>
+      <articolo>
+        <biglietto>Grande Muraglia, Cina</biglietto>
+        <prezzo>29.90</prezzo>
+        <quantita>1</quantita>
+      </articolo>
+    </articoli>
+  </ordine>
+  <ordine id="4407">
+    <username>luigi.verdi11</username>
+    <date>2025-11-25 17:52:25</date>
+    <totale>29.9</totale>
+    <articoli>
+      <articolo>
+        <biglietto>Grande Muraglia, Cina</biglietto>
+        <prezzo>29.90</prezzo>
+        <quantita>1</quantita>
+      </articolo>
+    </articoli>
+  </ordine>
+  <ordine id="542">
+    <username>mario.11</username>
+    <date>2025-11-25 17:37:30</date>
+    <totale>84</totale>
+    <articoli>
+      <articolo>
+        <biglietto>Machu Picchu, Cusco - Perù</biglietto>
+        <prezzo>42.00</prezzo>
         <quantita>2</quantita>
+      </articolo>
+    </articoli>
+  </ordine>
+  <ordine id="2547">
+    <username>mario.11</username>
+    <date>2025-11-25 17:37:13</date>
+    <totale>29.9</totale>
+    <articoli>
+      <articolo>
+        <biglietto>Grande Muraglia, Cina</biglietto>
+        <prezzo>29.90</prezzo>
+        <quantita>1</quantita>
       </articolo>
     </articoli>
   </ordine>
