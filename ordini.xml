@@ -2,6 +2,18 @@
 <!DOCTYPE ordini SYSTEM "ordini.dtd">
 <!-- Gli ordini verranno aggiunti qui automaticamente-->
 <ordini>
+  <ordine id="8451">
+    <username>mario.11</username>
+    <date>26-11-2025 01:27:26</date>
+    <totale>28</totale>
+    <articoli>
+      <articolo>
+        <biglietto>Cristo Redentore, Rio de Janeiro</biglietto>
+        <prezzo>28.00</prezzo>
+        <quantita>1</quantita>
+      </articolo>
+    </articoli>
+  </ordine>
   <ordine id="4826">
     <username>mario.11</username>
     <date>26-11-2025 01:15:17</date>

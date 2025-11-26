@@ -10,89 +10,8 @@
         exit();
     }
 
-
     require_once('./stile_shop.php');
 
-
-    // Verifichiamo se il file xml esiste
-    if (!file_exists('data.xml')) {
-        die("Errore: file data.xml non trovato");
-    }
-
-    
-    // Costruiamo una stringa con il contenuto del file
-    $xmlString = "";
-    foreach ( file("data.xml") as $node ) {
-	    $xmlString .= trim($node);
-    }
-
-    // Creazione del documento
-    $doc = new DOMDocument();
-
-    // Carica contentuo del file nel documento $doc con DOM
-    if (!$doc->loadXML($xmlString)) {
-        die("Errore durante il parsing");
-    }
-
-    // $biglietti è la lista degli elementi figli della radice catalogo del documento XML data.xml
-    $biglietti = $doc->documentElement->childNodes;
-
-
-    // Array immagini
-    $immagini = array(
-        "Grande Muraglia, Cina" => "./file/collegamento_1/img/muraglia.jpg",
-        "Petra, Giordania" => "./file/collegamento_2/img/petra.jpg",
-        "Cristo Redentore, Rio de Janeiro" => "./file/collegamento_3/img/redentore2.jpg",
-        "Machu Picchu, Cusco - Perù" => "./file/collegamento_4/img/machu_picchu.jpg",
-        "Chichén Itzá, Yucatàn - Messico" => "./file/collegamento_5/img/chichen_itza.jpg",
-        "Colosseo, Roma - Italia" => "./file/collegamento_6/img/colosseo-roma.jpg",
-        "Taj Mahal, Agra - India" => "./file/collegamento_7/img/taj_mahal.jpg"
-    );
-
-    
-    // Crea una mappa del tipo:  nome → prezzo  dal DOM
-    $catalogoMap = array();
-
-    for($i=0; $i<$biglietti->length; $i++){
-        $biglietto = $biglietti->item($i);
-
-        $nome = $biglietto->firstChild;
-        $nomeValue = $nome->textContent;
-        $prezzo = $nome->nextSibling;   // nextSibling ci porta al prossimo sottoelemento
-        $prezzoValue = $prezzo->textContent;
-        
-        $catalogoMap[$nomeValue] = $prezzoValue;
-    }
-
-    // Calcola il totale da pagare
-    $_SESSION['daPagare'] = 0;
-    // Raggruppa gli articoli uguali
-    $articoliRaggruppati = array(); // Array per raggruppare
-
-    // Conta le occorrenze di ogni biglietto nel carrello
-    // Avremo una cosa del genere: Array ( [Grande Muraglia, Cina] => 2 [Cristo Redentore, Rio de Janeiro] => 2 )
-    $conteggioCarrello = array_count_values($_SESSION['carrello']);
-    //print_r($conteggioCarrello);
-
-    foreach ($conteggioCarrello as $nomeBiglietto => $quantita) {
-        if (isset($catalogoMap[$nomeBiglietto])) {
-            $prezzoUnitario = $catalogoMap[$nomeBiglietto];
-            $subtotale = $prezzoUnitario * $quantita;
-            
-            // Accumula totale generale
-            $_SESSION['daPagare'] += $subtotale;
-            
-            // Aggiungi all'array raggruppato
-            $articoliRaggruppati[] = array(
-                'nome' => $nomeBiglietto,
-                'prezzoUnitario' => $prezzoUnitario,
-                'quantita' => $quantita,
-                'subtotale' => $subtotale,
-                'immagine' => isset($immagini[$nomeBiglietto]) ? $immagini[$nomeBiglietto] : 'bianco.jpg'
-            );
-        }
-    }
-    //print_r($_POST);
 ?>
 
 <?xml version="1.0" encoding="UTF-8"?>
@@ -141,6 +60,87 @@
                     <a href="shop_xml.php">Vai al Catalogo</a>
                 </div>
         <?php }else{ ?>
+                <?php
+                // Verifichiamo se il file xml esiste
+                    if (!file_exists('data.xml')) {
+                        die("Errore: file data.xml non trovato");
+                    }
+
+                    
+                    // Costruiamo una stringa con il contenuto del file
+                    $xmlString = "";
+                    foreach ( file("data.xml") as $node ) {
+                        $xmlString .= trim($node);
+                    }
+
+                    // Creazione del documento
+                    $doc = new DOMDocument();
+
+                    // Carica contentuo del file nel documento $doc con DOM
+                    if (!$doc->loadXML($xmlString)) {
+                        die("Errore durante il parsing");
+                    }
+
+                    // $biglietti è la lista degli elementi figli della radice catalogo del documento XML data.xml
+                    $biglietti = $doc->documentElement->childNodes;
+
+
+                    // Array immagini
+                    $immagini = array(
+                        "Grande Muraglia, Cina" => "./file/collegamento_1/img/muraglia.jpg",
+                        "Petra, Giordania" => "./file/collegamento_2/img/petra.jpg",
+                        "Cristo Redentore, Rio de Janeiro" => "./file/collegamento_3/img/redentore2.jpg",
+                        "Machu Picchu, Cusco - Perù" => "./file/collegamento_4/img/machu_picchu.jpg",
+                        "Chichén Itzá, Yucatàn - Messico" => "./file/collegamento_5/img/chichen_itza.jpg",
+                        "Colosseo, Roma - Italia" => "./file/collegamento_6/img/colosseo-roma.jpg",
+                        "Taj Mahal, Agra - India" => "./file/collegamento_7/img/taj_mahal.jpg"
+                    );
+
+                    
+                    // Crea una mappa del tipo:  nome → prezzo  dal DOM
+                    $catalogoMap = array();
+
+                    for($i=0; $i<$biglietti->length; $i++){
+                        $biglietto = $biglietti->item($i);
+
+                        $nome = $biglietto->firstChild;
+                        $nomeValue = $nome->textContent;
+                        $prezzo = $nome->nextSibling;   // nextSibling ci porta al prossimo sottoelemento
+                        $prezzoValue = $prezzo->textContent;
+                        
+                        $catalogoMap[$nomeValue] = $prezzoValue;
+                    }
+
+                    // Calcola il totale da pagare
+                    $_SESSION['daPagare'] = 0;
+                    // Raggruppa gli articoli uguali
+                    $articoliRaggruppati = array(); // Array per raggruppare
+
+                    // Conta le occorrenze di ogni biglietto nel carrello
+                    // Avremo una cosa del genere: Array ( [Grande Muraglia, Cina] => 2 [Cristo Redentore, Rio de Janeiro] => 2 )
+                    $conteggioCarrello = array_count_values($_SESSION['carrello']);
+                    //print_r($conteggioCarrello);
+
+                    foreach ($conteggioCarrello as $nomeBiglietto => $quantita) {
+                        if (isset($catalogoMap[$nomeBiglietto])) {
+                            $prezzoUnitario = $catalogoMap[$nomeBiglietto];
+                            $subtotale = $prezzoUnitario * $quantita;
+                            
+                            // Accumula totale generale
+                            $_SESSION['daPagare'] += $subtotale;
+                            
+                            // Aggiungi all'array raggruppato
+                            $articoliRaggruppati[] = array(
+                                'nome' => $nomeBiglietto,
+                                'prezzoUnitario' => $prezzoUnitario,
+                                'quantita' => $quantita,
+                                'subtotale' => $subtotale,
+                                'immagine' => isset($immagini[$nomeBiglietto]) ? $immagini[$nomeBiglietto] : 'bianco.jpg'
+                            );
+                        }
+                    }
+                    //print_r($_POST);
+                ?>
                 <div class="riepilogo-pieno">
                     <?php foreach ($articoliRaggruppati as $k => $articolo){  ?>
                             <div class="articolo-riepilogo">

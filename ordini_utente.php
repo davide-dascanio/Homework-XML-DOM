@@ -206,13 +206,12 @@
                     <div class="text-totale">Totale speso in tutti gli ordini:</div>
                     <div class="price-totale"> <?php echo $_SESSION['spesaFinora']; ?> &euro; </div>
                 </div>
-       <?php } ?>
-       
-        <div class="stile-bottone">
-            <a href="shop_xml.php" class="bottone-back"> <i class="fas fa-arrow-left"></i> Torna al Catalogo </a>
-        </div>
+
+                <div class="stile-bottone">
+                    <a href="shop_xml.php" class="bottone-back"> <i class="fas fa-arrow-left"></i> Torna al Catalogo </a>
+                </div>
+       <?php } ?> 
     </div>
 </div>
-
 </body>
 </html>
