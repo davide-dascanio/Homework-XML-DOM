@@ -17,30 +17,6 @@
     require_once("./stile_shop.php");
 
 
-    // Verifichiamo se il file xml esiste
-    if (!file_exists('data.xml')) {
-        die("Errore: file data.xml non trovato");
-    }
-
-
-    // Costruiamo una stringa con il contenuto del file
-    $xmlString = "";
-    foreach ( file("data.xml") as $node ) {
-	    $xmlString .= trim($node);
-    }
-
-    // Creazione del documento
-    $doc = new DOMDocument();
-
-    // Carica contentuo del file nel documento $doc con DOM
-    if (!$doc->loadXML($xmlString)) {
-        die("Errore durante il parsing");
-    }
-
-    // $biglietti è la lista degli elementi figli della radice catalogo del documento XML data.xml
-    $biglietti = $doc->documentElement->childNodes;
-
-
     // Variabili per il messaggio
     $messaggio = "";
     $pagamentoOk = false;
@@ -69,6 +45,29 @@
             // Somma quanto pagato ora + quanto speso in passato
             $nuovoTotale = $_SESSION['daPagare'] + $_SESSION['spesaFinora'];
             
+            // Verifichiamo se il file xml esiste
+            if (!file_exists('data.xml')) {
+                die("Errore: file data.xml non trovato");
+            }
+
+            // Costruiamo una stringa con il contenuto del file
+            $xmlString = "";
+            foreach ( file("data.xml") as $node ) {
+                $xmlString .= trim($node);
+            }
+
+            // Creazione del documento
+            $doc = new DOMDocument();
+
+            // Carica contentuo del file nel documento $doc con DOM
+            if (!$doc->loadXML($xmlString)) {
+                die("Errore durante il parsing");
+            }
+
+            // $biglietti è la lista degli elementi figli della radice catalogo del documento XML data.xml
+            $biglietti = $doc->documentElement->childNodes;
+
+
             // SCRITTURA ORDINE IN ordini.xml
 
             // Carica o crea ordini.xml
