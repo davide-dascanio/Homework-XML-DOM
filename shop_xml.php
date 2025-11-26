@@ -12,6 +12,66 @@
 
     require_once("./stile_shop.php");
 
+
+    // Conta quanti biglietti con disponibilità limitata l'utente ha già acquistato negli ordini passati
+    // Per farlo leggiamo ordini.xml, file di verità sugli acquisiti effettuati fino ad ora
+    // Calcola storico acquisti UNA VOLTA SOLA 
+    $acquistatiStorico = array();
+
+    if (file_exists('ordini.xml')) {
+        $xmlStringOrdini = "";
+        foreach (file("ordini.xml") as $node) {
+            $xmlStringOrdini .= trim($node);
+        }
+        $docOrdini = new DOMDocument();
+        if (!$docOrdini->loadXML($xmlStringOrdini)) {
+            die("Errore durante il parsing");
+        }
+        
+        //getElementsByTagName('ordine') restituisce una LISTA (array) che contiene TUTTI gli elementi <ordine> del documento
+        $ordini = $docOrdini->getElementsByTagName('ordine');
+
+        //print_r($ordini); Per esempio abbiamo una cosa del genere: $ordini = [ordine1, ordine2, ordine3] → length = 3   (3 elementi)
+        //                                                                         ↑        ↑        ↑
+        //                                                                      item(0)  item(1)  item(2)   
+
+        $quantitaGiaAcquistata = 0;
+
+        for ($i = 0; $i < $ordini->length; $i++) {   // $i va da 0 a 3
+            $ordine = $ordini->item($i);  // Prima item(0), poi item(1), poi item(2)
+ 
+            // Dentro questo ordine specifico, cerca <username>
+            // (ce n'è solo UNO per ordine)
+            $usernameOrdine = $ordine->getElementsByTagName('username')->item(0)->textContent;
+            // → Sempre item(0) perché c'è solo UN username per ordine
+            
+            // Controlla solo gli ordini dell'utente corrente
+            if ($usernameOrdine == $_SESSION['username']) {
+
+                //getElementsByTagName('articolo') restituisce una LISTA (array) che contiene tutti gli elementi <articolo> di quello specifico ordine
+                $articoli = $ordine->getElementsByTagName('articolo');
+                
+                // Ciclo FOR per scorrere tutti gli <articolo> dentro questo ordine
+                for ($j = 0; $j < $articoli->length; $j++) {
+                    $articolo = $articoli->item($j);
+                    
+                    $nomeBigliettoOrdine = $articolo->getElementsByTagName('biglietto')->item(0)->textContent;
+                    $qta = $articolo->getElementsByTagName('quantita')->item(0)->textContent;
+                    
+                    // Controlla se nell'array $acquistatiStorico esiste già questo biglietto
+                    // Se NON esiste (!isset), lo inizializziamo a 0
+                    if (!isset($acquistatiStorico[$nomeBigliettoOrdine])) {
+                        $acquistatiStorico[$nomeBigliettoOrdine] = 0;
+                    }
+
+                    // Aggiungi la quantità di questo articolo al totale storico
+                    // Esempio: se aveva già 2 "Grande Muraglia" e ne trova altri 3, diventa 2 + 3 = 5
+                    $acquistatiStorico[$nomeBigliettoOrdine] += $qta;
+                }
+            }
+        }
+    }
+
     // Verifichiamo se il file xml che vogliamo caricare esiste
     if (!file_exists('data.xml')) {
         die("Errore: file data.xml non trovato");
@@ -212,6 +272,7 @@
                             <?php }elseif($disponibilita == 'limitato'){ ?>
                                     <!-- LIMITATO: conta quanti ne ha già nel carrello -->
                                     <?php
+                                    // 1. Conta quanti ne hai nel carrello
                                     $quantitaNelCarrello = 0;
                                     if (isset($_SESSION['carrello'])) {
                                         foreach ($_SESSION['carrello'] as $indice => $nomeBiglietto) {
@@ -220,18 +281,25 @@
                                             }
                                         }
                                     }
+
+                                    // 2. Leggi dallo storico pre-calcolato a inizio script
+                                    $quantitaGiaAcquistata = isset($acquistatiStorico[$nomeValue]) ? $acquistatiStorico[$nomeValue] : 0;
+
+                                    // 3. Calcola totale
                                     $limiteMassimo = 2;
-                                    if ($quantitaNelCarrello >= $limiteMassimo){ ?>
-                                        <!-- Limite raggiunto: input disabilitato SENZA form -->
-                                        <input type="submit" disabled value="Limite (<?php echo $quantitaNelCarrello; ?>/<?php echo $limiteMassimo; ?>)" class="bottone-limitato"/>
-                              <?php }else{  ?>
-                                        <!-- Può ancora aggiungerne -->
+                                    $quantitaTotale = $quantitaNelCarrello + $quantitaGiaAcquistata;
+
+                                    // 4. Mostra bottone appropriato
+                                    if ($quantitaTotale >= $limiteMassimo) { ?>
+                                        <!-- Ha già raggiunto il limite -->
+                                        <input type="submit" disabled value="Limite raggiunto (<?php echo $quantitaTotale; ?>/<?php echo $limiteMassimo; ?>)" class="bottone-limitato"/>
+                                    <?php } else { ?>
+                                        <!-- Può ancora aggiungere -->
                                         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
                                             <input type="hidden" name="selection" value="<?php echo $nomeValue; ?>"/>
-                                            <input type="submit" name="aggiungiAlCarrello" class="bottone-aggiungi" value="Aggiungi (<?php echo $quantitaNelCarrello; ?>/<?php echo $limiteMassimo; ?>)"/>
+                                            <input type="submit" name="aggiungiAlCarrello" class="bottone-aggiungi" value="Aggiungi (<?php echo $quantitaTotale; ?>/<?php echo $limiteMassimo; ?>)"/>
                                         </form>
-                              <?php }  ?>
-
+                                    <?php } ?>
 
                             <?php }else{  ?>
                                     <!-- Biglietto disponibile: input normale -->
