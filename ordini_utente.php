@@ -12,6 +12,9 @@
 
     require_once('./stile_shop.php'); 
 
+    
+    $validDTD = "";
+
     // Inizializza un array vuoto che conterrà tutti gli ordini dell'utente corrente
     // Ogni elemento sarà un array associativo con: id, date, totale, articoli[]
     $userOrdini = array();

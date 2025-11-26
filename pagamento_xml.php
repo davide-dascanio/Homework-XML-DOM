@@ -83,10 +83,14 @@
                 $ordini = $docOrdini->documentElement;
             } else {
                 // Crea documento
-                // Aggiunge dichiarazione DOCTYPE
+                // DOMImplementation() crea un'istanza della classe DOMImplementation, necessaria per gestire funzionalità avanzate
+                // dei documenti XML come la dichiarazione DOCTYPE
                 $implementation = new DOMImplementation();
+                // Crea il tipo di documento (DOCTYPE) specificando: nome root ('ordini'), public ID (vuoto), system ID ('ordini.dtd')
                 $dtd=$implementation->createDocumentType('ordini','','ordini.dtd');
+                // Crea il documento XML con: namespace URI (vuoto), nome elemento root (vuoto, verrà aggiunto dopo), e il DOCTYPE
                 $docOrdini=$implementation->createDocument('','',$dtd);
+                // Imposta la codifica del documento su UTF-8
                 $docOrdini->encoding ='UTF-8';
 
                 // Crea radice <ordini>
