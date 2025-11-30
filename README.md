@@ -64,9 +64,24 @@ I nuovi ordini vengono inseriti in testa (insertBefore) per mantenere l'ordine c
 - ordini.dtd: Document Type Definition per la validazione di ordini.xml. Definisce la struttura degli ordini e le relazioni gerarchiche tra elementi.
 Garantisce integrità strutturale del file ordini.xml prima di lettura/scrittura.
 
+- shop_xml.php: Pagina principale del catalogo che legge e visualizza i biglietti da data.xml utilizzando PHP DOM. Procedimento in generale:
+carica il file XML con file() e utilizza trim per rimuovere spazi, crea oggetto DOMDocument, valida con validate() contro il DTD, estrae la lista degli elementi figli della radice del documento XML data.xml
+con documentElement->childNodes, cicla sui nodi traversando la struttura (firstChild/nextSibling) per leggere attributi (getAttribute()) e contenuti testuali (textContent). Ogni biglietto è presentato
+in una scheda con immagine, nome della meraviglia, informazioni generali e prezzo.
+Gestisce biglietti limitati contando: 1) quanti ne sono già nel carrello sessione; 2) quanti ne ha già acquistati l'utente leggendo ordini.xml con getElementsByTagName().
+Se il totale raggiunge il limite (es. 2), il bottone "Aggiungi" diventa disabilitato.
+Mostra sidebar profilo, include il menu di navigazione dello shop (menu_shop.php) e lo stile condiviso (stile_shop.php). Le immagini sono gestite tramite array associativo PHP.
 
-
-
+- carrello.php: Pagina di gestione del carrello che mostra tutti i biglietti aggiunti dall'utente. Permette di:​
+  - Visualizzare la lista completa degli articoli nel carrello con checkbox di selezione​;
+  - Eliminare singoli biglietti selezionati​;
+  - Svuotare completamente il carrello​;
+  - Deselezionare gli articoli selezionati;
+  - Continuare con l'acquisto di articoli (shop_xml.php);
+  - Procedere al riepilogo d'acquisto (riepilogo_xml.php)​.
+  
+  Gli articoli nel carrello sono gestiti tramite la variabile di sessione $_SESSION['carrello'], nel caso in cui non ci siano articoli nel carrello viene mostrato un pulsante per tornare al catalogo.
+  Viene mostrata la sidebar profilo, include (menu_shop.php) e lo stile condiviso (stile_shop.php).
 
 
 
