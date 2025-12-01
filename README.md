@@ -34,7 +34,7 @@ per ognuna delle sette meraviglie, inoltre include il menu di navigazione princi
 - script.js: File JavaScript che gestisce l'interattività del menu overlay full-screen.
 
 - login.php: Form di accesso al sistema che verifica username e password inseriti confrontandoli con i dati nel database. In caso di login corretto, inizializza le variabili di
-sessione (nome, cognome, username, spesa finora) e reindirizza alla pagina shop.php. Gestisce anche messaggi di errore per credenziali errate. Utilizza lo stile definito in stile_autenticazione.php.
+sessione (nome, cognome, username, spesa finora) e reindirizza alla pagina shop_xml.php. Gestisce anche messaggi di errore per credenziali errate. Utilizza lo stile definito in stile_autenticazione.php.
 
 - registrazione.php: Form per la creazione di nuovi account utente. Raccoglie nome, cognome, username e password, verificando che lo username scelto non sia già presente nel database prima di
 procedere con l'inserimento. In caso di successo, reindirizza l'utente alla pagina login.php. Utilizza lo stile definito in stile_autenticazione.php.
@@ -70,7 +70,7 @@ con documentElement->childNodes, cicla sui nodi traversando la struttura (firstC
 in una scheda con immagine, nome della meraviglia, informazioni generali e prezzo.
 Gestisce biglietti limitati contando: 1) quanti ne sono già nel carrello sessione; 2) quanti ne ha già acquistati l'utente leggendo ordini.xml con getElementsByTagName().
 Se il totale raggiunge il limite (es. 2), il bottone "Aggiungi" diventa disabilitato.
-Mostra sidebar profilo, include il menu di navigazione dello shop (menu_shop.php) e lo stile condiviso (stile_shop.php). Le immagini sono gestite tramite array associativo PHP.
+Mostra sidebar profilo con validazione DTD, include il menu di navigazione dello shop (menu_shop.php) e lo stile condiviso (stile_shop.php). Le immagini sono gestite tramite array associativo PHP.
 
 - carrello.php: Pagina di gestione del carrello che mostra tutti i biglietti aggiunti dall'utente. Permette di:​
   - Visualizzare la lista completa degli articoli nel carrello con checkbox di selezione​;
@@ -83,14 +83,58 @@ Mostra sidebar profilo, include il menu di navigazione dello shop (menu_shop.php
   Gli articoli nel carrello sono gestiti tramite la variabile di sessione $_SESSION['carrello'], nel caso in cui non ci siano articoli nel carrello viene mostrato un pulsante per tornare al catalogo.
   Viene mostrata la sidebar profilo, include (menu_shop.php) e lo stile condiviso (stile_shop.php).
 
+- riepilogo_xml.php: Pagina di riepilogo pre-acquisto che mostra i dettagli completi dei biglietti selezionati leggendo i prezzi aggiornati da data.xml tramite DOM. Procedimento:
+carica il file XML con file() e utilizza trim, crea oggetto DOMDocument e valida il parsing; cicla sui nodi <'biglietto'> della radice <'catalogo'> traversando il documento
+(firstChild per <nome>, nextSibling per <prezzo>); costruisce una mappa associativa $catalogoMap che associa ogni nome biglietto al suo prezzo letto dall'XML.
+Conta le occorrenze di ogni biglietto nel carrello usando array_count_values() per gestire quantità multiple dello stesso articolo, recupera il prezzo dalla mappa e l'immagine dall'array statico $immagini.
+Calcola il subtotale (prezzo × quantità) per ogni articolo e accumula il totale generale in $_SESSION['daPagare']. Costruisce array $articoliRaggruppati con tutte le informazioni
+(nome, prezzoUnitario, quantità, subtotale, immagine) per la visualizzazione raggruppata. Mostra gli articoli in card con immagini, visualizza la formula "quantità × prezzo = subtotale",
+il totale finale da pagare, e fornisce pulsanti per modificare il carrello (carrello.php), continuare con gli acquisti (shop_xml.php) o procedere al pagamento (pagamento_xml.php).
+Viene mostrata la sidebar profilo, include (menu_shop.php) e lo stile condiviso (stile_shop.php).
+
+- pagamento_xml.php: Pagina che gestisce il completamento dell'acquisto con doppio salvataggio: MySQL per spese utente + XML per storico ordini. Procedimento:
+  1) Quando si arriva da riepilogo_xml.php senza POST conferma, mostra schermata di conferma con importo da pagare, form con pulsante "Conferma Pagamento"
+     (invia conferma=true via POST) e pulsante "Annulla" per tornare allo shop;
+  2) Legge data.xml per ottenere prezzi aggiornati e calcolare totale;
+  3) Aggiorna campo sommeSpese dell'utente in MySQL con query UPDATE;
+  4) Crea/modifica ordini.xml con manipolazione DOM: se il file non esiste, usa DOMImplementation()->createDocumentType() per creare DOCTYPE con riferimento a ordini.dtd, poi
+     createDocument() per creare struttura iniziale; se esiste, carica con loadXML() e valida;
+  5) Genera ID ordine con rand();
+  6) Crea nuovo nodo <ordine> con createElement(), imposta attributo id con setAttribute();
+  7) Crea e popola sottoelementi (username, date, totale, articoli) usando createElement() e createTextNode();
+  8) Per ogni articolo nel carrello crea struttura <'articolo'> con <'biglietto'>, <'prezzo'>, <'quantita'>;
+  9) Inserisce ordine in testa con insertBefore;
+  10) Salva modifiche con save('ordini.xml');
+  11) Se salvataggio XML fallisce, non esegue UPDATE MySQL; se UPDATE fallisce, rimuove ordine appena aggiunto dall'XML con removeChild().
+      Mostra messaggio successo/errore, svuota carrello, aggiorna $_SESSION['spesaFinora']. Viene mostrata la sidebar profilo, include (menu_shop.php) e lo stile condiviso (stile_shop.php).
+
+- ordini_utente.php: Pagina per visualizzare lo storico ordini dell'utente corrente leggendo da ordini.xml. Utilizza DOM per: caricare e validare il file XML, navigare con loop for su
+documentElement->childNodes, filtrare ordini per username con firstChild->textContent, leggere data e totale con navigazione nextSibling, estrarre articoli con loop annidato su
+childNodes del nodo <'articoli'>, popolare array associativo $userOrdini con struttura: id, date, totale, articoli[] (ciascuno con biglietto, prezzo, quantità, subtotale calcolato).
+Visualizza ordini, mostra quantità e subtotale per articolo, calcola e mostra totale speso complessivo da $_SESSION['spesaFinora'].
+Viene mostrata la sidebar profilo con validazione DTD, include (menu_shop.php) e lo stile condiviso (stile_shop.php).
+
+- menu_shop.php: Menu di navigazione importato dalle pagine autenticate accessibili dopo il login, che permette di andare:
+  - alla pagina di benvenuto del sito cliccando su "Le Sette Meraviglie" (index.php);
+  - al catalogo/shop (shop_xml.php);
+  - alla visualizzione del carrello (carrello.php);
+  - alla pagina di riepilogo pre-acquisto degli articoli (pagamento_xml.php);
+  - alla pagina dello storico ordini (ordini_utente.php);
+  - alla pagina di logout (logout.php).
+ 
+  Questo menu è presente in tutte le pagine operative del sito, quindi (shop, carrello, riepilogo, ordini utente, pagamento).
+
+- stile_shop.php: Script in cui si definisce una variabile $stile_shop con le regole CSS principali condivise tra tutte le pagine operative. Definisce lo stile per tutte gli
+elementi presenti nelle pagine, come lo stile per la sidebar, la barra di navigazione, form, tutti i vari layout strutturali, ecc..
 
 
 
+Gli stili vengono importati all'interno dei diversi documenti tramite la funzione require_once(). Gli stili vengono applicati stampando nella head la variabile definita nell'apposito script.
 
+I menu vengono importanti all'interno dei diversi documenti tramite la funzione require().
 
-
-
-
+Per la visualizzazione delle icone nei pulsanti e negli elementi dell'interfaccia, il progetto utilizza Font Awesome 6.0, una libreria di icone. Per utilizzare le icone Font Awesome
+nel progetto, è necessario includere il file CSS della libreria nell'header di ogni pagina. Questo si fa aggiungendo un link nella sezione <head> degli script.
 
 
 
